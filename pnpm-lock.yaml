@@ -49,6 +49,7 @@ specifiers:
   regenerator-runtime: ^0.12.1
   sass: 1.53.0
   sass-loader: '10'
+  uview-ui: 2.0.31
   vue: ^2.6.11
   vue-template-compiler: ^2.6.11
   vuex: ^3.2.0
@@ -79,6 +80,7 @@ dependencies:
   regenerator-runtime: 0.12.1
   sass: 1.53.0
   sass-loader: 10.3.1_sass@1.53.0
+  uview-ui: 2.0.31
   vue: 2.7.10
   vuex: 3.6.2_vue@2.7.10
 
@@ -10929,6 +10931,11 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
+
+  /uview-ui/2.0.31:
+    resolution: {integrity: sha512-I/0fGuvtiKHH/mBb864SGYk+SJ7WaF32tsBgYgeBOsxlUp+Th+Ac2tgz2cTvsQJl6eZYWsKZ3ixiSXCAcxZ8Sw==}
+    engines: {HBuilderX: ^3.1.0}
+    dev: false
 
   /v8-to-istanbul/4.1.4:
     resolution: {integrity: sha512-Rw6vJHj1mbdK8edjR7+zuJrpDtKIgNdAvTSAcpYfgMIw+u2dPDntD3dgN4XQFLU2/fvFQdzj+EeSGfd/jnY5fQ==}
