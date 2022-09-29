@@ -6,15 +6,17 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
-      "path": "pages/index/index",
+      "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "uni-app"
+        "navigationBarTitleText": "Soumns",
+        "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
+        "navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
       }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "Soumns",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   }

@@ -1,0 +1,23 @@
+/* 初始化盒模型 */
+html,
+body,
+div,
+span,
+view,
+text {
+  box-sizing: border-box;
+}
+
+/* bg-center */
+.soumns-bg {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* flex-center  */
+.soumns-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
