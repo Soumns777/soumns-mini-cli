@@ -10,7 +10,23 @@
       "style": {
         "navigationBarTitleText": "Soumns",
         "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
-        "navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+        "navigationBarTextStyle": "black" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+      }
+    },
+    {
+      "path": "pages/test/index",
+      "style": {
+        "navigationBarTitleText": "Soumns",
+        "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
+        "navigationBarTextStyle": "black" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+      }
+    },
+    {
+      "path": "pages/my/index",
+      "style": {
+        "navigationBarTitleText": "Soumns",
+        "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
+        "navigationBarTextStyle": "black" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
       }
     }
   ],
@@ -19,5 +35,32 @@
     "navigationBarTitleText": "Soumns",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  // tabBar区域
+  "tabBar": {
+    "color": "#C9C9C9",
+    "selectedColor": "#4c7ef6",
+    "backgroundColor": "#F9FAFC",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "Home",
+        "iconPath": "static/uploads/home.png",
+        "selectedIconPath": "static/uploads/home_active.png"
+      },
+      {
+        "pagePath": "pages/test/index",
+        "text": "Test",
+        "iconPath": "static/uploads/cate.png",
+        "selectedIconPath": "static/uploads/cate_active.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "My",
+        "iconPath": "static/uploads/my.png",
+        "selectedIconPath": "static/uploads/my_active.png"
+      }
+    ]
   }
 }
