@@ -3,6 +3,8 @@ import Vue from 'vue'
 import uView from 'uview-ui'
 Vue.use(uView)
 
+import share from './libs/share'
+Vue.mixin(share)
 // 调用setConfig方法，方法内部会进行对象属性深度合并，可以放心嵌套配置
 // 需要在Vue.use(uView)之后执行
 // uni.$u.setConfig({

@@ -4,16 +4,16 @@
     <!-- :bgColor="bgColor" -->
     <!-- :placeholder="true" -->
 
-    <u-navbar title="个人中心" @rightClick="rightClick" :autoBack="true"> </u-navbar>
+    <u-navbar title="个人中心" :bgColor="bgColor" :placeholder="true" @rightClick="rightClick" :autoBack="true"> </u-navbar>
 
-    <image class="" :style="{ width: '100%', position: 'fixed', top: '0px', left: '0', zIndex: '2000' }" src="@/static/uploads/bg_top.png" mode="widthFix" lazy-load="false" binderror="" bindload="">
-    </image>
+    <!-- <image class="" :style="{ width: '100%', position: 'fixed', top: '0px', left: '0', zIndex: '2000' }" src="@/static/uploads/bg_top.png" mode="widthFix" lazy-load="false" binderror="" bindload="">
+    </image> -->
 
     <!--  -->
     <!-- :style="{ marginTop: '230px', width: '200px', height: '50px' }" -->
-    <button class="soumns-btn" type="primary">通过方法跳转到about页面</button>
+    <!-- <button class="soumns-btn" type="primary">通过方法跳转到about页面</button> -->
 
-    <button type="primary" loading="true">页面主操作 Loading</button>
+    <!-- <button type="primary" loading="true">页面主操作 Loading</button> -->
   </view>
 </template>
 

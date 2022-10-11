@@ -22,11 +22,9 @@ export default {
         let menuWidth = menuButtonInfo.width + 'px'
         let menuHeight = menuButtonInfo.height + 'px'
         let menuBorderRadius = menuButtonInfo.height / 2 + 'px'
-        let menuRight = result.screenWidth - menuButtonInfo.right + 'px'
+        let menuRight = result.screenWidth - menuButtonInfo.right + 10 + 'px'
         let menuTop = menuButtonInfo.top + 'px'
         let contentTop = result.statusBarHeight + 44 + 'px'
-
-        console.log(menuHeight, '💙💛 顶部高度')
 
         let menuInfo = {
           statusBarHeight: statusBarHeight, // 状态栏高度----用来给自定义导航条页面的顶部导航条设计padding-top使用：目的留出系统的状态栏区域

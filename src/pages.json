@@ -45,19 +45,19 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "Home",
+        "text": "首页",
         "iconPath": "static/uploads/home.png",
         "selectedIconPath": "static/uploads/home_active.png"
       },
       {
         "pagePath": "pages/test/index",
-        "text": "Test",
+        "text": "方案",
         "iconPath": "static/uploads/cate.png",
         "selectedIconPath": "static/uploads/cate_active.png"
       },
       {
         "pagePath": "pages/my/index",
-        "text": "My",
+        "text": "我的",
         "iconPath": "static/uploads/my.png",
         "selectedIconPath": "static/uploads/my_active.png"
       }
