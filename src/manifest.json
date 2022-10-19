@@ -60,7 +60,12 @@
     /* 微信小程序特有相关 */ "appid": "wxc54fd7d8d379da04",
     "setting": {
       "urlCheck": false,
-      "ignoreDevUnusedFiles": false
+      "ignoreDevUnusedFiles": false,
+      // 去除siteMap信息
+      "checkSiteMap": false,
+      "postcss": true,
+      "minified": true,
+      "es6": true
     },
     "usingComponents": true
   },

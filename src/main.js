@@ -3,6 +3,7 @@ import Vue from 'vue'
 import uView from 'uview-ui'
 Vue.use(uView)
 
+// 全局混入分享至其他人和朋友圈
 import share from './libs/share'
 Vue.mixin(share)
 // 调用setConfig方法，方法内部会进行对象属性深度合并，可以放心嵌套配置

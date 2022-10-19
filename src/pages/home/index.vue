@@ -10,21 +10,28 @@
     </view>
 
     <!-- 上部内容 -->
-    <!-- <view class="container-top-content" selectable="false" space="false" decode="false">
+    <view class="container-top-content" selectable="false" space="false" decode="false">
       <text class="text1" selectable="false" space="false" decode="false"> 测试数据的 </text>
       <text class="text2" selectable="false" space="false" decode="false"> 测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1 </text>
-    </view> -->
+    </view>
 
     <!-- 图片 -->
-    <!-- <image class="container-card" src="@/static/uploads/home_card.png" mode="widthFix" lazy-load="false" binderror="" bindload=""> </image> -->
+    <image class="container-card" src="@/static/uploads/home_card.png" mode="widthFix" lazy-load="false" binderror="" bindload=""> </image>
 
-    <!-- <button type="primary" :style="{ marginTop: '100px', minWidth: '300px', minHeight: '50px', borderRadius: '30px' }" open-type="share">分享到微信</button> -->
+    <!-- 占位盒子 -->
+    <view class="" :style="{ width: '750px', height: '840rpx', zIndex: '2' }" hover-class="none" hover-stop-propagation="false"> </view>
 
+    {{ access_token }}
+
+    <!-- 立即分享 -->
     <!-- <u-button type="warning" :custom-style="btnStyle" shape="circle" open-type="share">立即分享</u-button> -->
+
+    <button class="soumns-btn" open-type="share" :style="{ backgroundColor: 'springgreen' }">Share</button>
   </view>
 </template>
 
 <script>
+import { LOGIN } from '@/services/request.js'
 export default {
   name: 'home',
   data() {
@@ -36,20 +43,55 @@ export default {
       menuBorderRadius: uni.getStorageSync('menuInfo').menuBorderRadius,
       menuRight: uni.getStorageSync('menuInfo').menuRight,
       menuTop: uni.getStorageSync('menuInfo').menuTop,
-      contentTop: uni.getStorageSync('menuInfo').contentTop
+      contentTop: uni.getStorageSync('menuInfo').contentTop,
+
+      access_token: '',
+      btnStyle: {
+        width: '300px',
+        height: '60px',
+        backgroundColor: 'springgreen'
+      }
     }
   },
   onLoad(options) {
-    console.log('💙💛 user_id:' + options.user_id)
-  },
-  // onShareAppMessage() {
-  //   console.log('💙💛 用户分享当前页面')
-  // },
-  // onShareTimeline() {
-  //   console.log('💙💛 转发到朋友圈')
-  // },
+    if (options.phone) {
+      console.log(options.phone, '💙💛 通过别人分享进来')
+    } else {
+      console.log('💙💛 自己进入')
+    }
 
-  methods: {}
+    this.login()
+    // console.log('💙💛 user_id:' + options.user_id)
+  },
+
+  methods: {
+    async login() {
+      const {
+        data: { data, RESULT_CODE, RESULT_MSG }
+      } = await LOGIN({
+        userName: 'admin',
+        password: '123456'
+      })
+
+      console.log(RESULT_CODE, RESULT_MSG, data, '💙💛 Login返回数据')
+
+      if (RESULT_CODE != '0000') {
+        return uni.showToast({
+          title: '登录失败了',
+          duration: 1500,
+          icon: 'error'
+        })
+      } else {
+        uni.showToast({
+          title: '登录成功',
+          duration: 1500,
+          icon: 'success'
+        })
+
+        this.access_token = data.access_token
+      }
+    }
+  }
 }
 </script>
 

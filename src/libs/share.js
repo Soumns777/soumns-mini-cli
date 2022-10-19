@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       shareParams: {
-        path: '/pages/home/index?user_id=100',
+        path: '/pages/home/index?phone=18855023059',
         title: '邀请您成为新用户'
       }
     }
@@ -12,7 +12,6 @@ export default {
       // 来自页面内分享按钮
     }
 
-    console.log(res.target, '💙💛 转发至其他人')
     return {
       title: this.shareParams.title, // 标题
       path: this.shareParams.path, // 分享路径
@@ -21,10 +20,10 @@ export default {
     }
   },
   onShareTimeline() {
-    console.log('💙💛 转发至朋友圈')
     return {
       title: this.shareParams.title, // 标题
-      path: this.shareParams.path, // 分享路径
+      path: '/pages/home/index', // 分享路径
+      query: 'phone=18260041998',
       imageUrl: 'https://cdn.uviewui.com/uview/swiper/1.jpg' // 分享图
     }
   }
