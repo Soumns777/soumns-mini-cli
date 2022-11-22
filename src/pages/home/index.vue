@@ -4,8 +4,12 @@
 
     <!-- 自定义顶部左侧胶囊 -->
     <view class="my_tab_title" :style="{ paddingTop: statusBarHeight }">
-      <view class="menu_btn" :style="{ position: 'fixed', top: menuTop, left: menuRight, width: menuWidth, height: menuHeight }">
+      <!-- <view class="menu_btn" :style="{ position: 'fixed', top: menuTop, left: menuRight, width: menuWidth, height: menuHeight }">
         <u-icon name="arrow-left" class="arrowleft" color="#fff" size="20"></u-icon>
+      </view> -->
+
+      <view class="menu_btn" :style="{ position: 'fixed', top: menuTop, right: '40px', width: menuWidth, height: menuHeight }">
+        <u-icon name="server-fill" class="arrowleft" color="#fff" size="2"></u-icon>
       </view>
     </view>
 
@@ -101,7 +105,6 @@ export default {
 
   .my_tab_title {
     width: 100%;
-    // height: 64px; //这个是固定的44px（所有小程序顶部高度都是 = 44px + 手机系统状态栏高度）
     line-height: 44px;
     position: fixed;
     top: 0;

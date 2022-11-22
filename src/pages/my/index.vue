@@ -1,36 +1,31 @@
 <template>
   <view>
-    <!-- 2.0.19支持autoBack，默认为false -->
-    <!-- :bgColor="bgColor" -->
-    <!-- :placeholder="true" -->
+    <soumns-navbar :imgSrc="imgSrc" :imgHeight="imgHeight" :isShowBack="false">
+      <template #other>
+        <view :style="{ position: 'fixed', marginLeft: '240px', marginTop: '7px' }">
+          <u-icon name="server-fill" color="#fff" size="24"></u-icon>
+        </view>
+      </template>
+    </soumns-navbar>
 
-    <u-navbar title="个人中心" :bgColor="bgColor" :placeholder="true" @rightClick="rightClick" :autoBack="true"> </u-navbar>
+    <view :style="{ marginTop: imgHeight, color: '#ff6100', zIndex: 2, width: '200px', height: '40px', backgroundColor: 'skyblue' }">999</view>
 
-    <!-- <image class="" :style="{ width: '100%', position: 'fixed', top: '0px', left: '0', zIndex: '2000' }" src="@/static/uploads/bg_top.png" mode="widthFix" lazy-load="false" binderror="" bindload="">
-    </image> -->
-
-    <!--  -->
-    <!-- :style="{ marginTop: '230px', width: '200px', height: '50px' }" -->
-    <!-- <button class="soumns-btn" type="primary">通过方法跳转到about页面</button> -->
-
-    <!-- <button type="primary" loading="true">页面主操作 Loading</button> -->
+    <label>11</label>
   </view>
 </template>
 
 <script>
+import SoumnsNavbar from '../../components/SoumnsNavbar.vue'
 export default {
+  components: {
+    SoumnsNavbar
+  },
   data() {
     return {
-      bgColor: '#76EEC6'
+      imgSrc: require('@/static/uploads/bg_home.png'), // 需要用reqiure来引入图片
+      imgHeight: '658rpx'
     }
   },
-  methods: {
-    rightClick() {
-      console.log('rightClick')
-    },
-    leftClick() {
-      console.log('leftClick')
-    }
-  }
+  methods: {}
 }
 </script>
