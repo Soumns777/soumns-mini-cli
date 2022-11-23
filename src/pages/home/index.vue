@@ -32,11 +32,9 @@
 
     <button class="soumns-btn" :style="{ backgroundColor: 'springgreen' }" @click="requestSubscribe()">订阅消息</button>
 
-    <open-data type="userNickName"></open-data>
-    <open-data type="userGender"></open-data>
-    <open-data type="userCountry"></open-data>
+    <!-- <button class="soumns-btn" :style="{ backgroundColor: 'skyblue', marginTop: '20px' }" @click="getUserInfo()">获取头像</button> -->
 
-    <open-data type="userAvatarUrl"></open-data>
+    <!-- <u-image :src="avatarUrl" width="80px" height="80px" mode="widthFix" shape="square" radius="50%" /> -->
   </view>
 </template>
 
@@ -60,7 +58,9 @@ export default {
         width: '300px',
         height: '60px',
         backgroundColor: 'springgreen'
-      }
+      },
+
+      avatarUrl: ''
     }
   },
   onLoad(options) {
@@ -187,6 +187,26 @@ export default {
           console.log(loginRes, '💙💛 loginRes')
         }
       })
+    },
+
+    /**
+     * @desc init user info
+     */
+    getUserInfo() {
+      let _ = this
+      uni.getUserProfile({
+        desc: '展示用户头像信息',
+        success(res) {
+          console.log(res, '💙💛 获取头像信息成功')
+
+          _.avatarUrl = res.userInfo.avatarUrl
+
+          console.log(_.avatarUrl, '💙💛 this.avatarUrl')
+        },
+        fail(err) {
+          console.log(err, '💙💛 获取头像信息失败')
+        }
+      })
     }
   }
 }
@@ -277,6 +297,12 @@ export default {
     left: 30rpx;
     width: 690rpx;
     height: 422rpx;
+  }
+
+  .user-avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
   }
 }
 </style>
