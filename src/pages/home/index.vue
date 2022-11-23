@@ -30,7 +30,13 @@
     <!-- 立即分享 -->
     <!-- <u-button type="warning" :custom-style="btnStyle" shape="circle" open-type="share">立即分享</u-button> -->
 
-    <button class="soumns-btn" open-type="share" :style="{ backgroundColor: 'springgreen' }">Share</button>
+    <button class="soumns-btn" :style="{ backgroundColor: 'springgreen' }" @click="requestSubscribe()">订阅消息</button>
+
+    <open-data type="userNickName"></open-data>
+    <open-data type="userGender"></open-data>
+    <open-data type="userCountry"></open-data>
+
+    <open-data type="userAvatarUrl"></open-data>
   </view>
 </template>
 
@@ -64,8 +70,11 @@ export default {
       console.log('💙💛 自己进入')
     }
 
-    this.login()
-    // console.log('💙💛 user_id:' + options.user_id)
+    // this.login()
+
+    this.initSetting()
+
+    this.initCode()
   },
 
   methods: {
@@ -94,6 +103,90 @@ export default {
 
         this.access_token = data.access_token
       }
+    },
+
+    /**
+     * @desc 发起消息订阅
+     */
+    requestSubscribe() {
+      var that = this
+
+      uni.showModal({
+        title: '温馨提示',
+        content: '为更好的促进您与本司的交流，服务号需要在您完成签约时向您发送消息',
+        confirmText: '同意',
+        cancelText: '拒绝',
+        success: function (res) {
+          if (res.confirm) {
+            // 调用订阅消息
+            console.log('用户点击确定')
+            // 调用订阅
+
+            // kwgf_A_qUx4HNlZNbRjgxavMsX0HYNo9YEf9E9XVUP8
+            uni.requestSubscribeMessage({
+              tmplIds: ['kwgf_A_qUx4HNlZNbRjgxavMsX0HYNo9YEf9E9XVUP8', 'q-hbwQRkjW8jDJYdmBmpQtwrDg-fhmnergmbfKMofYY'],
+              success: (res) => {
+                console.log(res, '💙💛 订阅成功')
+              },
+              fail: (errCode, errMessage) => {
+                console.log(errCode, errMessage, '💙💛 订阅消息 失败 ')
+              }
+              // complete: (errMsg) => {
+              //   console.log(errMsg, '订阅消息 完成 ')
+              // }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+            // 显示第二个弹说明一下
+            wx.showModal({
+              title: '温馨提示',
+              content: '拒绝后您将无法获取实时的与本司的交易消息',
+              confirmText: '知道了',
+              showCancel: false,
+              success: function (res) {
+                ///点击知道了的后续操作
+                ///如跳转首页面
+              }
+            })
+          }
+        }
+      })
+    },
+
+    /**
+     * @desc init user setting
+     */
+    initSetting() {
+      uni.getSetting({
+        withSubscriptions: true,
+        success(res) {
+          console.log(res, '💙💛 init setting success')
+
+          if (res.subscriptionsSetting.mainSwitch) {
+            uni.showToast({
+              title: '用户已经订阅消\r\n息',
+              duration: 1000
+            })
+          }
+        },
+        fail(err) {
+          console.log(err, '💙💛 init setting fail')
+        }
+      })
+    },
+
+    /**
+     * @desc initCode
+     */
+    initCode() {
+      // 传递this变量
+      var that = this
+      uni.login({
+        provider: 'weixin',
+        success(loginRes) {
+          console.log(loginRes, '💙💛 loginRes')
+        }
+      })
     }
   }
 }
