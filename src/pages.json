@@ -13,10 +13,10 @@
       }
     },
     {
-      "path": "pages/test/index",
+      "path": "pages/cart/index",
       "style": {
         "navigationBarTitleText": "Soumns",
-        "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
+        // "navigationStyle": "custom", // 隐藏系统导航栏(用户自定义导航栏)
         "navigationBarTextStyle": "black" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
       }
     },
@@ -49,7 +49,7 @@
         "selectedIconPath": "static/uploads/home_active.png"
       },
       {
-        "pagePath": "pages/test/index",
+        "pagePath": "pages/cart/index",
         "text": "方案",
         "iconPath": "static/uploads/cate.png",
         "selectedIconPath": "static/uploads/cate_active.png"

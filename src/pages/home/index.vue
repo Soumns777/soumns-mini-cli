@@ -30,11 +30,23 @@
     <!-- 立即分享 -->
     <!-- <u-button type="warning" :custom-style="btnStyle" shape="circle" open-type="share">立即分享</u-button> -->
 
-    <button class="soumns-btn" :style="{ backgroundColor: 'springgreen' }" @click="requestSubscribe()">订阅消息</button>
+    <!-- <button class="soumns-btn" :style="{ backgroundColor: 'springgreen' }" @click="requestSubscribe()">订阅消息</button>
 
-    <!-- <button class="soumns-btn" :style="{ backgroundColor: 'skyblue', marginTop: '20px' }" @click="getUserInfo()">获取头像</button> -->
+    <button class="soumns-btn" :style="{ backgroundColor: 'skyblue', marginTop: '20px' }" @click="getUserInfo()">获取头像</button>
 
-    <!-- <u-image :src="avatarUrl" width="80px" height="80px" mode="widthFix" shape="square" radius="50%" /> -->
+    <u--image :src="avatarUrl" width="80px" height="80px"></u--image>
+    {{ nickName || '昵称' }} -->
+
+    <form action="/" @submit="formSubmit">
+      <button open-type="chooseAvatar" @chooseavatar="chooseAvatar">上传</button>
+      <!-- <u--image :src="avatarUrl" width="80px" height="80px"></u--image> -->
+
+      <image :src="avatarUrl" mode="widthFix"></image>
+
+      <input type="nickname" placeholder="请输入昵称" v-model="nickName" @blur="onNickName" />
+
+      <button form-type="submit">提交</button>
+    </form>
   </view>
 </template>
 
@@ -60,7 +72,9 @@ export default {
         backgroundColor: 'springgreen'
       },
 
-      avatarUrl: ''
+      avatarUrl: '',
+      src: 'https://cdn.uviewui.com/uview/album/1.jpg',
+      nickName: ''
     }
   },
   onLoad(options) {
@@ -200,8 +214,9 @@ export default {
           console.log(res, '💙💛 获取头像信息成功')
 
           _.avatarUrl = res.userInfo.avatarUrl
+          _.nickName = res.userInfo.nickName
 
-          console.log(_.avatarUrl, '💙💛 this.avatarUrl')
+          console.log(_.avatarUrl, _.nickName, '💙💛 getUserProfile')
         },
         fail(err) {
           console.log(err, '💙💛 获取头像信息失败')
@@ -214,7 +229,7 @@ export default {
 
 <style lang="scss" scoped>
 .page_box {
-  position: fixed;
+  // position: fixed;
 
   .my_tab_title {
     width: 100%;
