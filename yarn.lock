@@ -5840,6 +5840,11 @@
   "resolved" "https://registry.npmmirror.com/ignore/-/ignore-4.0.6.tgz"
   "version" "4.0.6"
 
+"image-tools@^1.4.0":
+  "integrity" "sha512-TKtvJ6iUwM0mfaD4keMnk1ENHFC470QEjBfA3IlvKdEOufzvWbjbaoNcoyYq6HlViF8+d5tOS1ooE6j7CHf1lQ=="
+  "resolved" "https://registry.npmmirror.com/image-tools/-/image-tools-1.4.0.tgz"
+  "version" "1.4.0"
+
 "immediate@~3.0.5":
   "integrity" "sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ=="
   "resolved" "https://registry.npmmirror.com/immediate/-/immediate-3.0.6.tgz"

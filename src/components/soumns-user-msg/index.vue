@@ -1,9 +1,9 @@
-<!-- 
+<!--
     @desc 自定义获取用户头像和昵称组件
  -->
 
 <template>
-  <form action="/" class="container" @submit="submit">
+  <form action='/src/static' class="container" @submit="submit">
     <view class="container-user-photo">
       <u--image src="/static/uploads/default.jpeg" mode="widthFix" width="66px" height="66px" v-if="isShowDefault"></u--image>
 

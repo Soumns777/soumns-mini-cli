@@ -1,31 +1,73 @@
 <template>
-  <view>
-    <soumns-navbar :imgSrc="imgSrc" :imgHeight="imgHeight" :isShowBack="false">
+  <view class='container'>
+    <soumns-nav-bar class='container-top' :isShowBack='false' :imgHeight='imgHeight'
+                    :backgroundImage='backgroundImage'
+    >
       <template #other>
-        <view :style="{ position: 'fixed', marginLeft: '240px', marginTop: '7px' }">
-          <u-icon name="server-fill" color="#fff" size="24"></u-icon>
+        <view class='container-nav-top'>
+          测试-测试数据
         </view>
+
+
       </template>
-    </soumns-navbar>
+    </soumns-nav-bar>
 
-    <view :style="{ marginTop: imgHeight, color: '#ff6100', zIndex: 2, width: '200px', height: '40px', backgroundColor: 'skyblue' }">999</view>
 
-    <label>11</label>
   </view>
+
 </template>
 
 <script>
-import SoumnsNavbar from '../../components/SoumnsNavbar.vue'
+
+import { pathToBase64, base64ToPath } from 'image-tools'
+
 export default {
-  components: {
-    SoumnsNavbar
-  },
+  name: 'my',
   data() {
     return {
-      imgSrc: require('@/static/uploads/bg_home.png'), // 需要用reqiure来引入图片
+      backgroundImage: '', // 需要用reqiure来引入图片
       imgHeight: '658rpx'
     }
   },
+  onShow() {
+
+    pathToBase64('static/uploads/bg_home.png')
+      .then(base64 => {
+        this.backgroundImage = base64
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  },
   methods: {}
+
 }
 </script>
+
+<style lang='scss' scoped>
+.container {
+  position: relative;
+  background-color: $bg-color;
+  padding-bottom: 130rpx;
+  overflow-x: hidden;
+
+  .container-top {
+    .container-nav-top {
+      position: absolute;
+      left: 40rpx;
+      font-size: 40rpx;
+      color: #FFFFFF;
+    }
+
+    .container-nav-kefu {
+      position: absolute;
+      right: 207rpx;
+      width: 46rpx;
+      height: 40rpx;
+      margin-top: 10rpx;
+    }
+  }
+
+}
+
+</style>
