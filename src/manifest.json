@@ -6,7 +6,8 @@
   "versionCode": "100",
   "transformPx": false,
   "app-plus": {
-    /* 5+App特有相关 */ "usingComponents": true,
+    /* 5+App特有相关 */
+    "usingComponents": true,
     "splashscreen": {
       "alwaysShowBeforeRender": true,
       "waiting": true,
@@ -57,7 +58,8 @@
     /* 快应用特有相关 */
   },
   "mp-weixin": {
-    /* 微信小程序特有相关 */ "appid": "wxc54fd7d8d379da04",
+    /* 微信小程序特有相关 */
+    "appid": "wxc54fd7d8d379da04",
     "setting": {
       "urlCheck": false,
       "ignoreDevUnusedFiles": false,
@@ -67,7 +69,16 @@
       "minified": true,
       "es6": true
     },
-    "usingComponents": true
+    "usingComponents": true,
+    "permission": {
+      "scope.userLocation": {
+        "desc": "测试位置"
+      }
+    },
+    "lazyCodeLoading": "requiredComponents",
+    "optimization": {
+      "subPackages": true
+    }
   },
   "mp-alipay": {
     "usingComponents": true

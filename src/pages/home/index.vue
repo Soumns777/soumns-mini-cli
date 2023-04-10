@@ -1,323 +1,328 @@
+<!--
+   * @FileDescription:
+   * @Author:
+   * @Node:
+   * @Date:
+-->
 <template>
-  <view class="page_box">
-    <image class="container-top-bg" src="@/static/uploads/bg_home.png" mode="widthFix" lazy-load="false" binderror="" bindload=""> </image>
+  <view class='container'>
+    <view class='container-top soumns-flex'>
+      <!--      <image src='/static/uploads/zulin-details-car.png' mode='widthFix' class='top-car-img' />-->
+      <text class='top-car-text'>苏A1980S</text>
+    </view>
 
-    <!-- 自定义顶部左侧胶囊 -->
-    <view class="my_tab_title" :style="{ paddingTop: statusBarHeight }">
-      <!-- <view class="menu_btn" :style="{ position: 'fixed', top: menuTop, left: menuRight, width: menuWidth, height: menuHeight }">
-        <u-icon name="arrow-left" class="arrowleft" color="#fff" size="20"></u-icon>
-      </view> -->
 
-      <view class="menu_btn" :style="{ position: 'fixed', top: menuTop, right: '40px', width: menuWidth, height: menuHeight }">
-        <u-icon name="server-fill" class="arrowleft" color="#fff" size="2"></u-icon>
+    <view class='container-daikuan-details'>
+      <view class='daikuan-details-top soumns-flex-cart'>
+        <text class='details-top-text'>期数</text>
+        <text class='details-top-text'>还款日</text>
+        <text class='details-top-text'>租金</text>
+        <text class='details-top-text'>状态</text>
+      </view>
+
+      <view class='daikuan-details-line' />
+
+      <view class='daikuan-details-content'>
+        <scroll-view id='scroll' class='scroll' scroll-y='true'
+                     scroll-with-animation='true'>
+          <view class='details-content-eval soumns-flex-cart' v-for='(item,idx) in paymentInformation' :key='idx'>
+            <text class='content-eval-text soumns-flex'>{{ item.stageNum }}
+            </text>
+            <text class='content-eval-text'>{{ item.repayDate }}</text>
+            <text class='content-eval-text soumns-flex'>{{ item.repayAmount }}
+            </text>
+            <text class='content-eval-text' :class="item.status == JIESHU ? 'yihuan':'weihuan'">{{
+                item.status == SHENGXIAO || item.status == YUQI ? '未还' : '已还'
+              }}
+            </text>
+          </view>
+
+        </scroll-view>
       </view>
     </view>
 
-    <!-- 上部内容 -->
-    <view class="container-top-content" selectable="false" space="false" decode="false">
-      <text class="text1" selectable="false" space="false" decode="false"> 测试数据的 </text>
-      <text class="text2" selectable="false" space="false" decode="false"> 测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1测试数据的1 </text>
-    </view>
 
-    <!-- 图片 -->
-    <image class="container-card" src="@/static/uploads/home_card.png" mode="widthFix" lazy-load="false" binderror="" bindload=""> </image>
-
-    <!-- 占位盒子 -->
-    <view class="" :style="{ width: '750px', height: '840rpx', zIndex: '2' }" hover-class="none" hover-stop-propagation="false"> </view>
-
-    {{ access_token }}
-
-    <!-- 立即分享 -->
-    <!-- <u-button type="warning" :custom-style="btnStyle" shape="circle" open-type="share">立即分享</u-button> -->
-
-    <!-- <button class="soumns-btn" :style="{ backgroundColor: 'springgreen' }" @click="requestSubscribe()">订阅消息</button>
-
-    <button class="soumns-btn" :style="{ backgroundColor: 'skyblue', marginTop: '20px' }" @click="getUserInfo()">获取头像</button>
-
-    <u--image :src="avatarUrl" width="80px" height="80px"></u--image>
-    {{ nickName || '昵称' }} -->
-
-    <form action="/" @submit="formSubmit">
-      <button open-type="chooseAvatar" @chooseavatar="chooseAvatar">上传</button>
-      <!-- <u--image :src="avatarUrl" width="80px" height="80px"></u--image> -->
-
-      <image :src="avatarUrl" mode="widthFix"></image>
-
-      <input type="nickname" placeholder="请输入昵称" v-model="nickName" @blur="onNickName" />
-
-      <button form-type="submit">提交</button>
-    </form>
   </view>
 </template>
 
 <script>
-import { LOGIN } from '@/services/request.js'
 export default {
   name: 'home',
   data() {
     return {
-      bgColor: '#ff6100', // 434761
-      statusBarHeight: uni.getStorageSync('menuInfo').statusBarHeight, // 状态栏的高度（可以设置为顶部导航条的padding-top）
-      menuWidth: uni.getStorageSync('menuInfo').menuWidth,
-      menuHeight: uni.getStorageSync('menuInfo').menuHeight,
-      menuBorderRadius: uni.getStorageSync('menuInfo').menuBorderRadius,
-      menuRight: uni.getStorageSync('menuInfo').menuRight,
-      menuTop: uni.getStorageSync('menuInfo').menuTop,
-      contentTop: uni.getStorageSync('menuInfo').contentTop,
-
-      access_token: '',
-      btnStyle: {
-        width: '300px',
-        height: '60px',
-        backgroundColor: 'springgreen'
-      },
-
-      avatarUrl: '',
-      src: 'https://cdn.uviewui.com/uview/album/1.jpg',
-      nickName: ''
+      paymentInformation: [],
+      SHENGXIAO: '1',// 未还
+      YUQI: '2', // 逾期
+      JIESHU: '3', // 已还
+      scrollTop: 0
     }
   },
-  onLoad(options) {
-    if (options.phone) {
-      console.log(options.phone, '💙💛 通过别人分享进来')
-    } else {
-      console.log('💙💛 自己进入')
-    }
-
-    // this.login()
-
-    this.initSetting()
-
-    this.initCode()
+  onLoad() {
+    this.handleInit()
   },
+  onShow() {
 
+  },
+  mounted() {
+    uni.createSelectorQuery().select('.daikuan-details-content').boundingClientRect((res) => {
+      const scrollH = res.top
+      console.log('💙💛scorllH', scrollH)
+      uni.pageScrollTo({
+        duration: 100,// 过渡时间
+        scrollTop: 1306// 滚动的实际距离
+      })
+    }).exec()
+  },
   methods: {
-    async login() {
-      const {
-        data: { data, RESULT_CODE, RESULT_MSG }
-      } = await LOGIN({
-        userName: 'admin',
-        password: '123456'
-      })
-
-      console.log(RESULT_CODE, RESULT_MSG, data, '💙💛 Login返回数据')
-
-      if (RESULT_CODE != '0000') {
-        return uni.showToast({
-          title: '登录失败了',
-          duration: 1500,
-          icon: 'error'
-        })
-      } else {
-        uni.showToast({
-          title: '登录成功',
-          duration: 1500,
-          icon: 'success'
-        })
-
-        this.access_token = data.access_token
-      }
-    },
-
-    /**
-     * @desc 发起消息订阅
-     */
-    requestSubscribe() {
-      var that = this
-
-      uni.showModal({
-        title: '温馨提示',
-        content: '为更好的促进您与本司的交流，服务号需要在您完成签约时向您发送消息',
-        confirmText: '同意',
-        cancelText: '拒绝',
-        success: function (res) {
-          if (res.confirm) {
-            // 调用订阅消息
-            console.log('用户点击确定')
-            // 调用订阅
-
-            // kwgf_A_qUx4HNlZNbRjgxavMsX0HYNo9YEf9E9XVUP8
-            uni.requestSubscribeMessage({
-              tmplIds: ['kwgf_A_qUx4HNlZNbRjgxavMsX0HYNo9YEf9E9XVUP8', 'q-hbwQRkjW8jDJYdmBmpQtwrDg-fhmnergmbfKMofYY'],
-              success: (res) => {
-                console.log(res, '💙💛 订阅成功')
-              },
-              fail: (errCode, errMessage) => {
-                console.log(errCode, errMessage, '💙💛 订阅消息 失败 ')
-              }
-              // complete: (errMsg) => {
-              //   console.log(errMsg, '订阅消息 完成 ')
-              // }
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-            // 显示第二个弹说明一下
-            wx.showModal({
-              title: '温馨提示',
-              content: '拒绝后您将无法获取实时的与本司的交易消息',
-              confirmText: '知道了',
-              showCancel: false,
-              success: function (res) {
-                ///点击知道了的后续操作
-                ///如跳转首页面
-              }
-            })
-          }
-        }
-      })
-    },
-
-    /**
-     * @desc init user setting
-     */
-    initSetting() {
-      uni.getSetting({
-        withSubscriptions: true,
-        success(res) {
-          console.log(res, '💙💛 init setting success')
-
-          if (res.subscriptionsSetting.mainSwitch) {
-            uni.showToast({
-              title: '用户已经订阅消\r\n息',
-              duration: 1000
-            })
-          }
+    handleInit() {
+      this.paymentInformation = [
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/09',
+          'stageNum': '1',
+          'status': '3'
         },
-        fail(err) {
-          console.log(err, '💙💛 init setting fail')
-        }
-      })
-    },
-
-    /**
-     * @desc initCode
-     */
-    initCode() {
-      // 传递this变量
-      var that = this
-      uni.login({
-        provider: 'weixin',
-        success(loginRes) {
-          console.log(loginRes, '💙💛 loginRes')
-        }
-      })
-    },
-
-    /**
-     * @desc init user info
-     */
-    getUserInfo() {
-      let _ = this
-      uni.getUserProfile({
-        desc: '展示用户头像信息',
-        success(res) {
-          console.log(res, '💙💛 获取头像信息成功')
-
-          _.avatarUrl = res.userInfo.avatarUrl
-          _.nickName = res.userInfo.nickName
-
-          console.log(_.avatarUrl, _.nickName, '💙💛 getUserProfile')
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '3'
         },
-        fail(err) {
-          console.log(err, '💙💛 获取头像信息失败')
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
+        },
+        {
+          'repayAmount': '2260.94',
+          'repayDate': '2022/08/03',
+          'stageNum': '2',
+          'status': '2'
         }
-      })
+      ]
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.page_box {
-  // position: fixed;
+<style scoped lang='scss'>
+.container {
+  //min-width: 100vw;
+  //min-height: 100vh;
+  padding: 30rpx 0 0rpx 0;
+  background-color: $bg-color;
+  background-color: skyblue;
 
-  .my_tab_title {
-    width: 100%;
-    line-height: 44px;
-    position: fixed;
-    top: 0;
-    font-size: 32rpx;
-    color: #fff;
-    font-weight: 500;
-
-    .menu_btn {
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      position: fixed; // 行内式写了固定定位--目的是去掉下划页面一起滚动问题
-      .arrowleft {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-160%, -50%) !important;
-        -webkit-transform: translate(-160%, -50%) !important;
-      }
-      .text_box {
-        width: 1rpx;
-        height: 20px;
-        background-color: #ddd;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) !important;
-        -webkit-transform: translate(-50%, -50%) !important;
-      }
-      .home {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(60%, -50%) !important;
-        -webkit-transform: translate(60%, -50%) !important;
-      }
-    }
-  }
-
-  .container-top-bg {
-    width: 100%;
-    height: 658rpx;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  .container-top-content {
-    position: absolute;
-    top: 179rpx;
-    left: 30rpx;
-    width: 750rpx;
-    height: 60rpx;
-    display: flex;
-    flex-direction: column;
-
-    .text1 {
-      font-size: 40rpx;
-      color: #fff;
-      margin-bottom: 24rpx;
-    }
-
-    .text2 {
-      opacity: 0.8;
-      font-size: 26rpx;
-      color: #ffffff;
-      letter-spacing: 0;
-      text-align: justify;
-      line-height: 39rpx;
-      margin-right: 30px;
-    }
-  }
-
-  .container-card {
-    position: absolute;
-    top: 388rpx;
-    left: 30rpx;
+  .container-top {
+    margin-left: 30rpx;
     width: 690rpx;
-    height: 422rpx;
+    height: 82rpx;
+    background: #FFFFFF;
+    border-radius: 16rpx;
+    font-size: 30rpx;
+    color: #966A3C;
+
+
+    .top-car-img {
+      width: 41rpx;
+      height: 32rpx;
+      margin-right: 20rpx;
+    }
+
+    .top-car-text {
+      min-width: 142rpx;
+      font-size: 30rpx;
+      color: #966A3C;
+    }
   }
 
-  .user-avatar {
-    width: 60rpx;
-    height: 60rpx;
-    border-radius: 50%;
+  .container-daikuan-details {
+    margin: 30rpx 30rpx 0 30rpx;
+    width: 690rpx;
+    //height: calc(100vh - 220rpx);
+    overflow: auto;
+    background: #FFFFFF;
+    border-radius: 16rpx;
+    padding-top: 30rpx;
+
+    .daikuan-details-top {
+      padding: 0 60rpx;
+
+      .details-top-text {
+        font-size: 28rpx;
+        color: #966A3C;
+        min-width: 155rpx;
+
+        &:nth-child(2) {
+          //margin: 0 99rpx 0 127rpx;
+          min-width: 211rpx;
+        }
+
+        &:nth-child(3) {
+          //margin-right: 108rpx;
+          min-width: 148rpx;
+        }
+
+        &:last-child {
+          min-width: 56rpx;
+        }
+      }
+    }
+
+    .daikuan-details-line {
+      width: 630rpx;
+      height: 2rpx;
+      margin: 30rpx 0 0 30rpx;
+      background-image: linear-gradient(to right, #e3e7e9 35%, rgba(255, 255, 255, 0) 0%); /* 35%设置虚线点x轴上的长度 */
+      background-position: bottom; /* top配置上边框位置的虚线 */
+      background-size: 20rpx 2rpx; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
+      background-repeat: repeat-x;
+    }
+
+    .daikuan-details-content {
+
+      //.scroll {
+      //  white-space: nowrap;
+      //  width: 100%;
+      //  position: absolute;
+      //  left: 0;
+      //  right: 0;
+      //  background: #FFFFFF;
+      //}
+
+      .details-content-eval {
+        //position: relative;
+        height: 100rpx;
+        background-color: #fff;
+
+        &:nth-child(2n) {
+          height: 80rpx;
+          background-color: #f8faff;
+        }
+
+        .content-eval-text {
+          //position: absolute;
+          //left: 71rpx;
+          //min-width: 50rpx;
+          color: #919191;
+          min-width: 173rpx;
+          font-size: 28rpx;
+
+          &:nth-child(2) {
+            min-width: 163rpx;
+          }
+
+          &:nth-child(3) {
+            min-width: 238rpx;
+          }
+
+          &:nth-child(4) {
+            min-width: 56rpx;
+          }
+
+          //
+          //&:nth-child(2) {
+          //  left: 173rpx;
+          //  min-width: 163rpx;
+          //}
+          //
+          //&:nth-child(3) {
+          //  left: 403rpx;
+          //  min-width: 103rpx;
+          //}
+          //
+          //&:nth-child(4) {
+          //  left: 574rpx;
+          //  min-width: 56rpx;
+          //}
+
+
+        }
+
+        /* 已还 */
+        .yihuan {
+          color: #417505;
+        }
+
+        /* 未还 */
+        .weihuan {
+          color: #D7312E;
+        }
+
+        /* 预期*/
+        .yuqi {
+          color: #266fff;
+        }
+
+
+      }
+
+
+    }
+
   }
+
+
 }
 </style>

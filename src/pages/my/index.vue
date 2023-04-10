@@ -7,12 +7,8 @@
         <view class='container-nav-top'>
           测试-测试数据
         </view>
-
-
       </template>
     </soumns-nav-bar>
-
-
   </view>
 
 </template>
