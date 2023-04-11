@@ -7,8 +7,7 @@
 <template>
   <view class='container'>
     <view class='container-top soumns-flex'>
-      <!--      <image src='/static/uploads/zulin-details-car.png' mode='widthFix' class='top-car-img' />-->
-      <text class='top-car-text'>苏A1980S</text>
+      <text class='top-car-text'>苏A1999S</text>
     </view>
 
 
@@ -22,10 +21,13 @@
 
       <view class='daikuan-details-line' />
 
+      <!-- :style='{height:scrollHeight}'-->
       <view class='daikuan-details-content'>
-        <scroll-view id='scroll' class='scroll' scroll-y='true'
-                     scroll-with-animation='true'>
-          <view class='details-content-eval soumns-flex-cart' v-for='(item,idx) in paymentInformation' :key='idx'>
+        <scroll-view scroll-y='true'
+                     style='height: 900rpx'
+                     scroll-with-animation='true' :scroll-into-view='scrollId'>
+          <view class='details-content-eval soumns-flex-cart' v-for='(item,idx) in paymentInformation' :id='item.id'
+                :key='idx' @click='handleClick(item.id)'>
             <text class='content-eval-text soumns-flex'>{{ item.stageNum }}
             </text>
             <text class='content-eval-text'>{{ item.repayDate }}</text>
@@ -54,7 +56,8 @@ export default {
       SHENGXIAO: '1',// 未还
       YUQI: '2', // 逾期
       JIESHU: '3', // 已还
-      scrollTop: 0
+      scrollTop: 0,
+      scrollId: '' // 滚动位置
     }
   },
   onLoad() {
@@ -64,14 +67,6 @@ export default {
 
   },
   mounted() {
-    uni.createSelectorQuery().select('.daikuan-details-content').boundingClientRect((res) => {
-      const scrollH = res.top
-      console.log('💙💛scorllH', scrollH)
-      uni.pageScrollTo({
-        duration: 100,// 过渡时间
-        scrollTop: 1306// 滚动的实际距离
-      })
-    }).exec()
   },
   methods: {
     handleInit() {
@@ -98,7 +93,7 @@ export default {
           'repayAmount': '2260.94',
           'repayDate': '2022/08/03',
           'stageNum': '2',
-          'status': '2'
+          'status': '3'
         },
         {
           'repayAmount': '2260.94',
@@ -161,6 +156,27 @@ export default {
           'status': '2'
         }
       ]
+
+      //  已还
+      const hadRepay = this.paymentInformation.filter(item => item.status == '3')
+
+      //  未还
+      const hadNotRepay = this.paymentInformation.filter(item => item.status == '1' || item.status == '2')
+
+      this.paymentInformation = [...hadRepay, ...hadNotRepay]
+
+      this.paymentInformation.map((item, idx) => {
+        this.$set(item, 'id', 'S' + (Number(idx) + 1))
+      })
+
+      console.log('💙💛hadRepay', hadRepay.length)
+
+      // 滚动到指定位置
+      this.scrollId = 'S' + hadRepay.length
+    },
+
+    handleClick(id) {
+      this.scrollId = id
     }
   }
 }
@@ -168,10 +184,7 @@ export default {
 
 <style scoped lang='scss'>
 .container {
-  //min-width: 100vw;
-  //min-height: 100vh;
   padding: 30rpx 0 0rpx 0;
-  background-color: $bg-color;
   background-color: skyblue;
 
   .container-top {
@@ -200,8 +213,8 @@ export default {
   .container-daikuan-details {
     margin: 30rpx 30rpx 0 30rpx;
     width: 690rpx;
-    //height: calc(100vh - 220rpx);
-    overflow: auto;
+    height: calc(100vh - 300rpx);
+
     background: #FFFFFF;
     border-radius: 16rpx;
     padding-top: 30rpx;
@@ -215,12 +228,10 @@ export default {
         min-width: 155rpx;
 
         &:nth-child(2) {
-          //margin: 0 99rpx 0 127rpx;
           min-width: 211rpx;
         }
 
         &:nth-child(3) {
-          //margin-right: 108rpx;
           min-width: 148rpx;
         }
 
@@ -241,18 +252,11 @@ export default {
     }
 
     .daikuan-details-content {
-
-      //.scroll {
-      //  white-space: nowrap;
-      //  width: 100%;
-      //  position: absolute;
-      //  left: 0;
-      //  right: 0;
-      //  background: #FFFFFF;
-      //}
+      height: calc(100% - 160rpx);
+      overflow: auto;
 
       .details-content-eval {
-        //position: relative;
+        position: relative;
         height: 100rpx;
         background-color: #fff;
 
@@ -262,9 +266,6 @@ export default {
         }
 
         .content-eval-text {
-          //position: absolute;
-          //left: 71rpx;
-          //min-width: 50rpx;
           color: #919191;
           min-width: 173rpx;
           font-size: 28rpx;
@@ -281,22 +282,6 @@ export default {
             min-width: 56rpx;
           }
 
-          //
-          //&:nth-child(2) {
-          //  left: 173rpx;
-          //  min-width: 163rpx;
-          //}
-          //
-          //&:nth-child(3) {
-          //  left: 403rpx;
-          //  min-width: 103rpx;
-          //}
-          //
-          //&:nth-child(4) {
-          //  left: 574rpx;
-          //  min-width: 56rpx;
-          //}
-
 
         }
 
@@ -310,7 +295,7 @@ export default {
           color: #D7312E;
         }
 
-        /* 预期*/
+        /* 逾期 */
         .yuqi {
           color: #266fff;
         }
