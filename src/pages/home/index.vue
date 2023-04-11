@@ -21,7 +21,6 @@
 
       <view class='daikuan-details-line' />
 
-      <!-- :style='{height:scrollHeight}'-->
       <view class='daikuan-details-content'>
         <scroll-view scroll-y='true'
                      style='height: 900rpx'
@@ -56,7 +55,6 @@ export default {
       SHENGXIAO: '1',// 未还
       YUQI: '2', // 逾期
       JIESHU: '3', // 已还
-      scrollTop: 0,
       scrollId: '' // 滚动位置
     }
   },
