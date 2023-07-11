@@ -6,43 +6,45 @@
 -->
 <template>
   <view class='container'>
-    <view class='container-top soumns-flex'>
-      <text class='top-car-text'>苏A1999S</text>
-    </view>
+    <!--    open-type='share'-->
+    <button @click='handleOpenPdf'>打开pdf</button>
+
+    <button @click='handleSharePdf'>转发</button>
+    <!--    <view class='container-top soumns-flex'>-->
+    <!--      <text class='top-car-text'>苏A1999S</text>-->
+    <!--    </view>-->
 
 
-    <view class='container-daikuan-details'>
-      <view class='daikuan-details-top soumns-flex-cart'>
-        <text class='details-top-text'>期数</text>
-        <text class='details-top-text'>还款日</text>
-        <text class='details-top-text'>租金</text>
-        <text class='details-top-text'>状态</text>
-      </view>
+    <!--    <view class='container-daikuan-details'>-->
+    <!--      <view class='daikuan-details-top soumns-flex-cart'>-->
+    <!--        <text class='details-top-text'>期数</text>-->
+    <!--        <text class='details-top-text'>还款日</text>-->
+    <!--        <text class='details-top-text'>租金</text>-->
+    <!--        <text class='details-top-text'>状态</text>-->
+    <!--      </view>-->
 
-      <view class='daikuan-details-line' />
+    <!--      <view class='daikuan-details-line' />-->
 
-      <view class='daikuan-details-content'>
-        <scroll-view scroll-y='true'
-                     style='height: 900rpx'
-                     scroll-with-animation='true' :scroll-into-view='scrollId'>
-          <view class='details-content-eval soumns-flex-cart' v-for='(item,idx) in paymentInformation' :id='item.id'
-                :key='idx' @click='handleClick(item.id)'>
-            <text class='content-eval-text soumns-flex'>{{ item.stageNum }}
-            </text>
-            <text class='content-eval-text'>{{ item.repayDate }}</text>
-            <text class='content-eval-text soumns-flex'>{{ item.repayAmount }}
-            </text>
-            <text class='content-eval-text' :class="item.status == JIESHU ? 'yihuan':'weihuan'">{{
-                item.status == SHENGXIAO || item.status == YUQI ? '未还' : '已还'
-              }}
-            </text>
-          </view>
+    <!--      <view class='daikuan-details-content'>-->
+    <!--        <scroll-view scroll-y='true'-->
+    <!--                     style='height: 900rpx'-->
+    <!--                     scroll-with-animation='true' :scroll-into-view='scrollId'>-->
+    <!--          <view class='details-content-eval soumns-flex-cart' v-for='(item,idx) in paymentInformation' :id='item.id'-->
+    <!--                :key='idx' @click='handleClick(item.id)'>-->
+    <!--            <text class='content-eval-text soumns-flex'>{{ item.stageNum }}-->
+    <!--            </text>-->
+    <!--            <text class='content-eval-text'>{{ item.repayDate }}</text>-->
+    <!--            <text class='content-eval-text soumns-flex'>{{ item.repayAmount }}-->
+    <!--            </text>-->
+    <!--            <text class='content-eval-text' :class="item.status == JIESHU ? 'yihuan':'weihuan'">{{-->
+    <!--                item.status == SHENGXIAO || item.status == YUQI ? '未还' : '已还'-->
+    <!--              }}-->
+    <!--            </text>-->
+    <!--          </view>-->
 
-        </scroll-view>
-      </view>
-    </view>
-
-
+    <!--        </scroll-view>-->
+    <!--      </view>-->
+    <!--    </view>-->
   </view>
 </template>
 
@@ -59,7 +61,7 @@ export default {
     }
   },
   onLoad() {
-    this.handleInit()
+    // this.handleInit()
   },
   onShow() {
 
@@ -175,6 +177,75 @@ export default {
 
     handleClick(id) {
       this.scrollId = id
+    },
+
+
+    handleOpenPdf() {
+      uni.showLoading({ title: '正在下载...' })
+
+      uni.downloadFile({
+        url: 'https://xfjf.saomiaoapp.cn/smwtzpdf/pdf/pdf-MCRUYFJB8U6L.pdf', //下载地址接口返回
+        success: (data) => {
+          if (data.statusCode === 200) {
+            uni.hideLoading()
+
+            uni.openDocument({
+              //新开页面打开文档，支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx。
+              filePath: data.tempFilePath,
+              showMenu: true,
+              success: function(res) {
+                console.log('💙💛打开文档成功')
+              }
+            })
+
+            //文件保存到本地
+            // uni.saveFile({
+            //   tempFilePath: data.tempFilePath, //临时路径
+            //   success: function(resd) {
+            //     uni.showToast({
+            //       icon: 'success',
+            //       mask: true,
+            //       title: '下载成功',
+            //       duration: 2000
+            //     })
+            //
+            //
+            //     //自动打开文档查看
+            //     setTimeout(() => {
+            //       var filePath = resd.savedFilePath
+            //       uni.openDocument({
+            //         //新开页面打开文档，支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx。
+            //         filePath: filePath,
+            //         showMenu: true,
+            //         success: function(res) {
+            //           console.log('打开文档成功')
+            //         }
+            //       })
+            //     }, 2000)
+            //   }
+            // })
+            //
+
+          }
+        }
+      })
+
+    },
+
+    handleSharePdf() {
+      wx.downloadFile({
+        url: 'https://xfjf.saomiaoapp.cn/smwtzpdf/pdf/pdf-MCRUYFJB8U6L.pdf', // 下载url
+        success(res) {
+          // 下载完成后转发
+          wx.shareFileMessage({
+            filePath: res.tempFilePath,
+            success() {
+            },
+            fail: console.error
+          })
+        },
+        fail: console.error
+      })
     }
   }
 }
@@ -182,8 +253,7 @@ export default {
 
 <style scoped lang='scss'>
 .container {
-  padding: 30rpx 0 0rpx 0;
-  background-color: skyblue;
+
 
   .container-top {
     margin-left: 30rpx;
