@@ -10,6 +10,9 @@
     <button @click='handleOpenPdf'>打开pdf</button>
 
     <button @click='handleSharePdf'>转发</button>
+
+
+    <button @click='handleDownloadPdf'>下载</button>
     <!--    <view class='container-top soumns-flex'>-->
     <!--      <text class='top-car-text'>苏A1999S</text>-->
     <!--    </view>-->
@@ -180,6 +183,9 @@ export default {
     },
 
 
+    /**
+     * @desc 预览pdf
+     */
     handleOpenPdf() {
       uni.showLoading({ title: '正在下载...' })
 
@@ -232,6 +238,10 @@ export default {
 
     },
 
+
+    /**
+     * @desc 分享pdf
+     */
     handleSharePdf() {
       wx.downloadFile({
         url: 'https://xfjf.saomiaoapp.cn/smwtzpdf/pdf/pdf-MCRUYFJB8U6L.pdf', // 下载url
@@ -246,7 +256,48 @@ export default {
         },
         fail: console.error
       })
+    },
+
+
+    /**
+     * @desc 下载pdf到本地
+     */
+    handleDownloadPdf() {
+      var pdfUrl = 'https://xfjf.saomiaoapp.cn/smwtzpdf/pdf/pdf-MCRUYFJB8U6L.pdf' // PDF 文件的网络地址
+
+      wx.downloadFile({
+        url: pdfUrl,
+        success: function(res) {
+          var tempFilePath = res.tempFilePath // 下载成功后的临时文件路径
+
+          // 获取文件系统管理器
+          var fs = wx.getFileSystemManager()
+
+      
+          // 指定保存的文件路径
+          var savedFilePath = wx.env.USER_DATA_PATH + '/saved_file.pdf'
+
+          // 将临时文件保存到指定路径
+          fs.saveFile({
+            tempFilePath: tempFilePath,
+            filePath: savedFilePath,
+            success: function(res) {
+              console.log('💙💛文件保存成功', res.savedFilePath)
+
+              // 使用 savedFilePath 进行后续操作，例如展示、分享等
+              // 注意：savedFilePath 为本地的绝对路径，可以在小程序中进行访问
+            },
+            fail: function(error) {
+              console.error('文件保存失败:', error)
+            }
+          })
+        },
+        fail: function(error) {
+          console.error('文件下载失败:', error)
+        }
+      })
     }
+
   }
 }
 </script>
@@ -256,66 +307,66 @@ export default {
 
 
   .container-top {
-    margin-left: 30rpx;
-    width: 690rpx;
-    height: 82rpx;
+    margin-left: 30 rpx;
+    width: 690 rpx;
+    height: 82 rpx;
     background: #FFFFFF;
-    border-radius: 16rpx;
-    font-size: 30rpx;
+    border-radius: 16 rpx;
+    font-size: 30 rpx;
     color: #966A3C;
 
 
     .top-car-img {
-      width: 41rpx;
-      height: 32rpx;
-      margin-right: 20rpx;
+      width: 41 rpx;
+      height: 32 rpx;
+      margin-right: 20 rpx;
     }
 
     .top-car-text {
-      min-width: 142rpx;
-      font-size: 30rpx;
+      min-width: 142 rpx;
+      font-size: 30 rpx;
       color: #966A3C;
     }
   }
 
   .container-daikuan-details {
-    margin: 30rpx 30rpx 0 30rpx;
-    width: 690rpx;
+    margin: 30 rpx 30 rpx 0 30 rpx;
+    width: 690 rpx;
     height: calc(100vh - 300rpx);
 
     background: #FFFFFF;
-    border-radius: 16rpx;
-    padding-top: 30rpx;
+    border-radius: 16 rpx;
+    padding-top: 30 rpx;
 
     .daikuan-details-top {
-      padding: 0 60rpx;
+      padding: 0 60 rpx;
 
       .details-top-text {
-        font-size: 28rpx;
+        font-size: 28 rpx;
         color: #966A3C;
-        min-width: 155rpx;
+        min-width: 155 rpx;
 
         &:nth-child(2) {
-          min-width: 211rpx;
+          min-width: 211 rpx;
         }
 
         &:nth-child(3) {
-          min-width: 148rpx;
+          min-width: 148 rpx;
         }
 
         &:last-child {
-          min-width: 56rpx;
+          min-width: 56 rpx;
         }
       }
     }
 
     .daikuan-details-line {
-      width: 630rpx;
-      height: 2rpx;
-      margin: 30rpx 0 0 30rpx;
+      width: 630 rpx;
+      height: 2 rpx;
+      margin: 30 rpx 0 0 30 rpx;
       background-image: linear-gradient(to right, #e3e7e9 35%, rgba(255, 255, 255, 0) 0%); /* 35%设置虚线点x轴上的长度 */
       background-position: bottom; /* top配置上边框位置的虚线 */
-      background-size: 20rpx 2rpx; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
+      background-size: 20 rpx 2 rpx; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
       background-repeat: repeat-x;
     }
 
@@ -325,29 +376,29 @@ export default {
 
       .details-content-eval {
         position: relative;
-        height: 100rpx;
+        height: 100 rpx;
         background-color: #fff;
 
         &:nth-child(2n) {
-          height: 80rpx;
+          height: 80 rpx;
           background-color: #f8faff;
         }
 
         .content-eval-text {
           color: #919191;
-          min-width: 173rpx;
-          font-size: 28rpx;
+          min-width: 173 rpx;
+          font-size: 28 rpx;
 
           &:nth-child(2) {
-            min-width: 163rpx;
+            min-width: 163 rpx;
           }
 
           &:nth-child(3) {
-            min-width: 238rpx;
+            min-width: 238 rpx;
           }
 
           &:nth-child(4) {
-            min-width: 56rpx;
+            min-width: 56 rpx;
           }
 
 
