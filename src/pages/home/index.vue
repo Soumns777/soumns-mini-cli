@@ -65,12 +65,34 @@ export default {
   },
   onLoad() {
     // this.handleInit()
+
+    // const updateManager = wx.getUpdateManager()
+    // if (this.$version < 101) {
+    //   updateManager.onUpdateReady(function() {
+    //     wx.showModal({
+    //       title: '更新提示',
+    //       content: '新版本已经准备好，是否重启应用？',
+    //       success: function(res) {
+    //         if (res.confirm) {
+    //           // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+    //           updateManager.applyUpdate()
+    //         }
+    //       }
+    //     })
+    //   })
+    //   updateManager.onUpdateFailed(function() {
+    //     // 新的版本下载失败
+    //     wx.showModal({
+    //       title: '已经有新版本了哟~',
+    //       content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~'
+    //     })
+    //   })
+    // }
   },
   onShow() {
 
   },
-  mounted() {
-  },
+
   methods: {
     handleInit() {
       this.paymentInformation = [
@@ -273,7 +295,7 @@ export default {
           // 获取文件系统管理器
           var fs = wx.getFileSystemManager()
 
-      
+
           // 指定保存的文件路径
           var savedFilePath = wx.env.USER_DATA_PATH + '/saved_file.pdf'
 
@@ -307,66 +329,66 @@ export default {
 
 
   .container-top {
-    margin-left: 30 rpx;
-    width: 690 rpx;
-    height: 82 rpx;
+    margin-left: 30rpx;
+    width: 690rpx;
+    height: 82rpx;
     background: #FFFFFF;
-    border-radius: 16 rpx;
-    font-size: 30 rpx;
+    border-radius: 16rpx;
+    font-size: 30rpx;
     color: #966A3C;
 
 
     .top-car-img {
-      width: 41 rpx;
-      height: 32 rpx;
-      margin-right: 20 rpx;
+      width: 41rpx;
+      height: 32rpx;
+      margin-right: 20rpx;
     }
 
     .top-car-text {
-      min-width: 142 rpx;
-      font-size: 30 rpx;
+      min-width: 142rpx;
+      font-size: 30rpx;
       color: #966A3C;
     }
   }
 
   .container-daikuan-details {
-    margin: 30 rpx 30 rpx 0 30 rpx;
-    width: 690 rpx;
+    margin: 30rpx 30rpx 0 30rpx;
+    width: 690rpx;
     height: calc(100vh - 300rpx);
 
     background: #FFFFFF;
-    border-radius: 16 rpx;
-    padding-top: 30 rpx;
+    border-radius: 16rpx;
+    padding-top: 30rpx;
 
     .daikuan-details-top {
-      padding: 0 60 rpx;
+      padding: 0 60rpx;
 
       .details-top-text {
-        font-size: 28 rpx;
+        font-size: 28rpx;
         color: #966A3C;
-        min-width: 155 rpx;
+        min-width: 155rpx;
 
         &:nth-child(2) {
-          min-width: 211 rpx;
+          min-width: 211rpx;
         }
 
         &:nth-child(3) {
-          min-width: 148 rpx;
+          min-width: 148rpx;
         }
 
         &:last-child {
-          min-width: 56 rpx;
+          min-width: 56rpx;
         }
       }
     }
 
     .daikuan-details-line {
-      width: 630 rpx;
-      height: 2 rpx;
-      margin: 30 rpx 0 0 30 rpx;
+      width: 630rpx;
+      height: 2rpx;
+      margin: 30rpx 0 0 30rpx;
       background-image: linear-gradient(to right, #e3e7e9 35%, rgba(255, 255, 255, 0) 0%); /* 35%设置虚线点x轴上的长度 */
       background-position: bottom; /* top配置上边框位置的虚线 */
-      background-size: 20 rpx 2 rpx; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
+      background-size: 20rpx 2rpx; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
       background-repeat: repeat-x;
     }
 
@@ -376,29 +398,29 @@ export default {
 
       .details-content-eval {
         position: relative;
-        height: 100 rpx;
+        height: 100rpx;
         background-color: #fff;
 
         &:nth-child(2n) {
-          height: 80 rpx;
+          height: 80rpx;
           background-color: #f8faff;
         }
 
         .content-eval-text {
           color: #919191;
-          min-width: 173 rpx;
-          font-size: 28 rpx;
+          min-width: 173rpx;
+          font-size: 28rpx;
 
           &:nth-child(2) {
-            min-width: 163 rpx;
+            min-width: 163rpx;
           }
 
           &:nth-child(3) {
-            min-width: 238 rpx;
+            min-width: 238rpx;
           }
 
           &:nth-child(4) {
-            min-width: 56 rpx;
+            min-width: 56rpx;
           }
 
 

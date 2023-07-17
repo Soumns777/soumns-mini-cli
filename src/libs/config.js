@@ -5,4 +5,7 @@ const BASE_URL = 'http://localhost:3002'
 
 const TIME_OUT = '10000'
 
-export { BASE_URL, TIME_OUT }
+// 版本号
+const VERSION_NUMBER = '100'
+
+export { BASE_URL, TIME_OUT, VERSION_NUMBER }
