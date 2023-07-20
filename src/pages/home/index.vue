@@ -13,6 +13,9 @@
 
 
     <button @click='handleDownloadPdf'>下载</button>
+
+    <u-button type='primary' text='确定'></u-button>
+    <u-button type='primary' :plain='true' text='镂空'></u-button>
     <!--    <view class='container-top soumns-flex'>-->
     <!--      <text class='top-car-text'>苏A1999S</text>-->
     <!--    </view>-->
